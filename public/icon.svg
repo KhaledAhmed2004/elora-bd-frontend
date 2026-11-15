@@ -1,0 +1,50 @@
+<svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5BE6C" />
+      <stop offset="25%" stop-color="#FFF2C6" />
+      <stop offset="50%" stop-color="#C99438" />
+      <stop offset="75%" stop-color="#FCE39E" />
+      <stop offset="100%" stop-color="#9A6518" />
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B8860B" />
+      <stop offset="50%" stop-color="#805300" />
+      <stop offset="100%" stop-color="#553700" />
+    </linearGradient>
+    <filter id="glow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="#5B3E0A" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <g filter="url(#glow)">
+    <!-- Crown -->
+    <g id="crown">
+      <!-- 5-point Tiara -->
+      <path d="M174 44 L182 35 L190 41 L200 28 L210 41 L218 35 L226 44 C218 47 182 47 174 44 Z" fill="url(#gold)" />
+      <circle cx="200" cy="25" r="2.8" fill="#FFF8E7" stroke="url(#gold)" stroke-width="0.8" />
+      <circle cx="182" cy="32" r="2.2" fill="#FFF8E7" stroke="url(#gold)" stroke-width="0.8" />
+      <circle cx="218" cy="32" r="2.2" fill="#FFF8E7" stroke="url(#gold)" stroke-width="0.8" />
+      <circle cx="174" cy="41" r="1.8" fill="#FFF8E7" />
+      <circle cx="226" cy="41" r="1.8" fill="#FFF8E7" />
+      <!-- Arch base -->
+      <path d="M172 47 C185 45 215 45 228 47 C228 49 172 49 172 47 Z" fill="url(#goldDark)" />
+    </g>
+
+    <!-- Butterfly Wings -->
+    <!-- Left Top Wing -->
+    <path d="M196 66 C188 56 166 45 142 50 C124 54 130 76 148 83 C166 90 190 78 196 73 C192 78 172 88 156 86 C144 84 138 68 152 60 C168 51 188 60 196 66 Z" fill="url(#gold)" />
+    <!-- Right Top Wing -->
+    <path d="M204 66 C212 56 234 45 258 50 C276 54 270 76 252 83 C234 90 210 78 204 73 C208 78 228 88 244 86 C256 84 262 68 248 60 C232 51 212 60 204 66 Z" fill="url(#gold)" />
+
+    <!-- Left Bottom Wing -->
+    <path d="M195 78 C186 86 160 92 155 106 C150 119 168 126 182 116 C194 107 196 88 195 78 C193 84 186 104 176 109 C168 113 162 108 165 99 C168 91 184 84 195 78 Z" fill="url(#gold)" />
+    <!-- Right Bottom Wing -->
+    <path d="M205 78 C214 86 240 92 245 106 C250 119 232 126 218 116 C206 107 204 88 205 78 C207 84 214 104 224 109 C232 113 238 108 235 99 C232 91 216 84 205 78 Z" fill="url(#gold)" />
+
+    <!-- Center Diamond Body -->
+    <polygon points="200,66 205,78 200,90 195,78" fill="#FFFDF5" stroke="url(#gold)" stroke-width="1.2" />
+    <line x1="200" y1="66" x2="200" y2="90" stroke="url(#gold)" stroke-width="0.8" />
+    <line x1="195" y1="78" x2="205" y2="78" stroke="url(#gold)" stroke-width="0.8" />
+  </g>
+</svg>

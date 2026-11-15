@@ -1,0 +1,108 @@
+<svg viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8BE68" />
+      <stop offset="25%" stop-color="#FFF2CA" />
+      <stop offset="50%" stop-color="#C59335" />
+      <stop offset="75%" stop-color="#FDE29A" />
+      <stop offset="100%" stop-color="#9C6615" />
+    </linearGradient>
+    <linearGradient id="goldShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8E0" />
+      <stop offset="40%" stop-color="#E0B050" />
+      <stop offset="100%" stop-color="#A56E1A" />
+    </linearGradient>
+    <filter id="subtleGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#4A2E05" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <g filter="url(#subtleGlow)">
+    <!-- ================= CROWN ================= -->
+    <g id="crown">
+      <!-- 5-Point Tiara / Crown -->
+      <path d="M222 52 L232 40 L241 48 L250 32 L259 48 L268 40 L278 52 C268 55 232 55 222 52 Z" fill="url(#gold)" />
+      <!-- Jewels on tips -->
+      <circle cx="250" cy="30" r="3" fill="#FFFDF5" stroke="url(#gold)" stroke-width="1" />
+      <circle cx="232" cy="38" r="2.4" fill="#FFFDF5" stroke="url(#gold)" stroke-width="0.8" />
+      <circle cx="268" cy="38" r="2.4" fill="#FFFDF5" stroke="url(#gold)" stroke-width="0.8" />
+      <circle cx="221" cy="49" r="1.8" fill="#FFFDF5" />
+      <circle cx="279" cy="49" r="1.8" fill="#FFFDF5" />
+      <!-- Arch base band with studded diamonds -->
+      <path d="M220 54 C235 52 265 52 280 54 C280 57 220 57 220 54 Z" fill="url(#gold)" />
+      <circle cx="235" cy="55.5" r="1" fill="#FFFFFF" />
+      <circle cx="245" cy="55" r="1" fill="#FFFFFF" />
+      <circle cx="255" cy="55" r="1" fill="#FFFFFF" />
+      <circle cx="265" cy="55.5" r="1" fill="#FFFFFF" />
+    </g>
+
+    <!-- ================= BUTTERFLY ================= -->
+    <g id="butterfly">
+      <!-- Antennae -->
+      <path d="M246 72 C240 64 235 58 228 62" stroke="url(#gold)" stroke-width="1.4" stroke-linecap="round" fill="none" />
+      <circle cx="227" cy="62" r="1.2" fill="url(#gold)" />
+      <path d="M254 72 C260 64 265 58 272 62" stroke="url(#gold)" stroke-width="1.4" stroke-linecap="round" fill="none" />
+      <circle cx="273" cy="62" r="1.2" fill="url(#gold)" />
+
+      <!-- Upper Left Wing (Sweeping outward & upward) -->
+      <path d="M245 74 C234 60 205 48 174 54 C150 59 158 88 181 96 C204 104 236 90 245 84 C239 90 214 102 194 99 C179 97 172 77 189 67 C209 56 235 68 245 74 Z" fill="url(#gold)" />
+      
+      <!-- Upper Right Wing -->
+      <path d="M255 74 C266 60 295 48 326 54 C350 59 342 88 319 96 C296 104 264 90 255 84 C261 90 286 102 306 99 C321 97 328 77 311 67 C291 56 265 68 255 74 Z" fill="url(#gold)" />
+
+      <!-- Lower Left Wing -->
+      <path d="M244 88 C233 98 200 106 194 122 C188 137 210 145 227 133 C242 122 245 100 244 88 C241 95 233 118 220 124 C210 128 203 122 207 112 C211 102 231 94 244 88 Z" fill="url(#gold)" />
+      
+      <!-- Lower Right Wing -->
+      <path d="M256 88 C267 98 300 106 306 122 C312 137 290 145 273 133 C258 122 255 100 256 88 C259 95 267 118 280 124 C290 128 297 122 293 112 C289 102 269 94 256 88 Z" fill="url(#gold)" />
+
+      <!-- Center Body - Faceted Diamond Gem -->
+      <polygon points="250,73 257,87 250,101 243,87" fill="#FFFDF8" stroke="url(#gold)" stroke-width="1.5" />
+      <line x1="250" y1="73" x2="250" y2="101" stroke="url(#gold)" stroke-width="1" />
+      <line x1="243" y1="87" x2="257" y2="87" stroke="url(#gold)" stroke-width="1" />
+      <polygon points="250,78 254,87 250,96 246,87" fill="url(#goldShine)" opacity="0.6" />
+    </g>
+
+    <!-- ================= "ELORA" TYPOGRAPHY ================= -->
+    <g id="typography" fill="url(#gold)">
+      <!-- Signature 'E' with graceful flowing swoosh -->
+      <!-- Main E Body -->
+      <path d="M102 165 H148 C149.5 165 151 166.5 151 168 C151 169.5 149.5 171 148 171 H114 V195 H142 C143.5 195 145 196.5 145 198 C145 199.5 143.5 201 142 201 H114 V226 H150 C151.5 226 153 227.5 153 229 C153 230.5 151.5 232 150 232 H96 C94.5 232 93 230.5 93 229 V168 C93 166.5 94.5 165 96 165 H102 Z" />
+      
+      <!-- Signature Flourish / Swoosh from E under L and O -->
+      <!-- Curves smoothly down and arches up under LO, tapering delicately -->
+      <path d="M68 206 C105 186 138 200 178 226 C210 246 252 245 284 228 C260 236 226 237 195 222 C155 202 118 190 70 207 C66 208 64 207 68 206 Z" fill="url(#gold)" />
+
+      <!-- Letter 'L' -->
+      <path d="M165 165 H177 V225 H208 C209.5 225 211 226.5 211 228.5 C211 230.5 209.5 232 208 232 H160 C158.5 232 157 230.5 157 228.5 V168 C157 166.5 158.5 165 160 165 H165 Z" />
+
+      <!-- Letter 'O' -->
+      <path d="M251 164 C272 164 286 179 286 198.5 C286 218 272 233 251 233 C230 233 216 218 216 198.5 C216 179 230 164 251 164 Z M251 172 C236 172 227 183 227 198.5 C227 214 236 225 251 225 C266 225 275 214 275 198.5 C275 183 266 172 251 172 Z" />
+
+      <!-- Letter 'R' -->
+      <path d="M298 165 H324 C337 165 346 172 346 184 C346 194 339 200 329 202 L347 228 C348 229.5 347.5 231 346 232 H335 C333.5 232 332 231 331 229.5 L314 204 H309 V228.5 C309 230.5 307.5 232 305.5 232 H298 V165 Z M309 173 V196 H323 C330 196 335 191 335 184.5 C335 178 330 173 323 173 H309 Z" />
+
+      <!-- Letter 'A' -->
+      <path d="M381 165 L406 229 C407 231 405.5 232 403.5 232 H393 C391 232 389.5 231 389 229 L382 211 H355 L348 229 C347.5 231 346 232 344 232 H333 C331 232 330 231 331 229 L356 165 H381 Z M369 176 L359 203 H378 L369 176 Z" />
+    </g>
+
+    <!-- ================= SUB-ELEMENTS & TAGLINE ================= -->
+    <g id="subline">
+      <!-- Mini Coat Hanger with Heart Accent -->
+      <path d="M250 245 C250 242 248 240 246 242 C244 244 245 246 247 246 L233 256 H267 L253 246 C255 246 256 244 254 242 C252 240 250 242 250 245 Z" fill="url(#gold)" stroke="url(#gold)" stroke-width="0.8" />
+      <path d="M250 252 C248.5 250 246 251 246 252.5 C246 254 250 256 250 256 C250 256 254 254 254 252.5 C254 251 251.5 250 250 252 Z" fill="#FFF8E0" />
+
+      <!-- Left and Right Accent Lines -->
+      <line x1="70" y1="272" x2="160" y2="272" stroke="url(#gold)" stroke-width="1.2" stroke-linecap="round" />
+      <line x1="340" y1="272" x2="430" y2="272" stroke="url(#gold)" stroke-width="1.2" stroke-linecap="round" />
+
+      <!-- "Fashion & Lifestyle" Text -->
+      <text x="250" y="277" font-family="'Geist', 'Playfair Display', Georgia, serif" font-size="19" font-style="italic" font-weight="500" fill="url(#gold)" text-anchor="middle" letter-spacing="1.5">
+        Fashion &amp; Lifestyle
+      </text>
+
+      <!-- Bottom 4-Point Star -->
+      <path d="M250 292 C250 296 252 298 256 298 C252 298 250 300 250 304 C250 300 248 298 244 298 C248 298 250 296 250 292 Z" fill="url(#gold)" />
+    </g>
+  </g>
+</svg>

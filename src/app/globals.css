@@ -1,0 +1,234 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Page width wrapper: <div className="shop-container"> */
+@utility shop-container {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1rem;
+  @media (width >= 48rem) {
+    padding-inline: 1.5rem;
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Metallic gold text, like the logo wordmark. Large text only. */
+@utility text-gold-gradient {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--gold-ink);
+}
+
+@utility bg-gold-gradient {
+  background: var(--gold-gradient);
+}
+
+/* Gold fill for controls that carry espresso text (AA-safe) */
+@utility bg-gold-cta {
+  background: var(--gold-gradient-cta);
+}
+
+/* Thin gold rule with a fade, echoing the lines around the logo tagline */
+@utility gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans:
+    var(--font-geist-sans), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-geist-sans), var(--font-bangla), sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-sale: var(--sale);
+  --color-blush: var(--blush);
+  --color-blush-soft: var(--blush-soft);
+  --color-blush-deep: var(--blush-deep);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-ink: var(--gold-ink);
+  --color-espresso: var(--espresso);
+  --color-cocoa: var(--cocoa);
+  --font-display: var(--font-display-stack);
+  --font-logo: var(--font-cinzel), var(--font-display-stack);
+  --color-sale-foreground: var(--sale-foreground);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+ * Elora brand palette — taken from the client logo.
+ * 60% warm ivory · 30% blush pink · 10% gold + espresso (CTA/text).
+ * Bright gold (--gold) is decorative only: it fails contrast on white for
+ * small text. Use --gold-ink for gold-coloured text.
+ */
+:root {
+  /* Brand — fixed in both themes. Only --blush-soft and --gold-ink adapt. */
+  --blush: #f7c6cb;
+  --blush-soft: #fdf1f2;
+  --blush-deep: #e8a0aa;
+  --gold: #c99438;
+  --gold-light: #fce39e;
+  --gold-ink: #8a5b0b;
+  --espresso: #2b1a14;
+  --cocoa: #5a3222;
+  --gold-gradient: linear-gradient(
+    135deg,
+    #9a6518 0%,
+    #e5be6c 30%,
+    #fce39e 50%,
+    #c99438 70%,
+    #8a5b0b 100%
+  );
+  /* For buttons with espresso text: every stop keeps >= 6:1 contrast */
+  --gold-gradient-cta: linear-gradient(135deg, #c99438 0%, #f3d68a 50%, #c99438 100%);
+  --font-display-stack:
+    var(--font-cormorant), var(--font-bangla), ui-serif, Georgia, serif;
+
+  /* UI tokens */
+  --background: #fffbfa;
+  --foreground: #2b1a14;
+  --card: #ffffff;
+  --card-foreground: #2b1a14;
+  --popover: #ffffff;
+  --popover-foreground: #2b1a14;
+  --primary: #2b1a14;
+  --primary-foreground: #fff8f0;
+  --secondary: #fbe7ea;
+  --secondary-foreground: #5a3222;
+  --muted: #f9f1ef;
+  --muted-foreground: #76574c;
+  --accent: #fbe7ea;
+  --accent-foreground: #4a2618;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #f1e1df;
+  /* --input and --ring meet WCAG 1.4.11 (3:1) against the page */
+  --input: #a3877f;
+  --ring: #8a5b0b;
+  --chart-1: #2b1a14;
+  --chart-2: #8a5b0b;
+  --chart-3: #c99438;
+  --chart-4: #e8a0aa;
+  --chart-5: #f7c6cb;
+  --sale: #9a6518;
+  --sale-foreground: #fffaf0;
+  --radius: 0.5rem;
+  --sidebar: #fdf6f5;
+  --sidebar-foreground: #2b1a14;
+  --sidebar-primary: #2b1a14;
+  --sidebar-primary-foreground: #fff8f0;
+  --sidebar-accent: #fbe7ea;
+  --sidebar-accent-foreground: #4a2618;
+  --sidebar-border: #f1e1df;
+  --sidebar-ring: #c99438;
+}
+
+.dark {
+  --blush-soft: #2a1b1a;
+  --gold-ink: #e5be6c;
+
+  --background: #17100d;
+  --foreground: #f6ebe4;
+  --card: #1f1612;
+  --card-foreground: #f6ebe4;
+  --popover: #1f1612;
+  --popover-foreground: #f6ebe4;
+  --primary: #e5be6c;
+  --primary-foreground: #1f1410;
+  --secondary: #2f201d;
+  --secondary-foreground: #f6ebe4;
+  --muted: #2a1f1b;
+  --muted-foreground: #bba49a;
+  --accent: #35231f;
+  --accent-foreground: #f6ebe4;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: #d9ab52;
+  --chart-1: #f6ebe4;
+  --chart-2: #e5be6c;
+  --chart-3: #c99438;
+  --chart-4: #e8a0aa;
+  --chart-5: #6b3b42;
+  --sale: #e5be6c;
+  --sale-foreground: #1f1410;
+  --sidebar: #1c1410;
+  --sidebar-foreground: #f6ebe4;
+  --sidebar-primary: #e5be6c;
+  --sidebar-primary-foreground: #1f1410;
+  --sidebar-accent: #35231f;
+  --sidebar-accent-foreground: #f6ebe4;
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: #d9ab52;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    @apply font-sans;
+  }
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.015em;
+  }
+  ::selection {
+    @apply bg-blush text-espresso;
+  }
+}
