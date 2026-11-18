@@ -86,8 +86,7 @@ export function OrderSuccessView() {
           <p className="text-sm">
             <strong className="block">Delivery</strong>
             <span className="text-muted-foreground">
-              Arrives within{" "}
-              {a.district === "Dhaka" ? "1-2 days" : "3-5 days"}.
+              Arrives within {a.district === "Dhaka" ? "1-2 days" : "3-5 days"}.
             </span>
           </p>
         </div>

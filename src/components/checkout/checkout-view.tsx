@@ -98,7 +98,9 @@ export function CheckoutView() {
         <ShoppingBag className="size-12 text-muted-foreground" />
         <div>
           <p className="text-lg font-semibold">Nothing to check out</p>
-          <p className="text-sm text-muted-foreground">Add some products to your cart first</p>
+          <p className="text-sm text-muted-foreground">
+            Add some products to your cart first
+          </p>
         </div>
         <Button asChild size="lg">
           <Link href="/products">Start Shopping</Link>
@@ -458,8 +460,8 @@ function CheckoutForm({ onPlaced }: { onPlaced: () => void }) {
                   Pay the {formatPrice(advanceAmount)} delivery charge in advance
                 </p>
                 <p className="mt-1 text-muted-foreground">
-                  <strong>Send Money</strong> to the number below and enter the Transaction ID.
-                  Pay the rest when you receive your order.
+                  <strong>Send Money</strong> to the number below and enter the
+                  Transaction ID. Pay the rest when you receive your order.
                 </p>
               </div>
               <div className="flex gap-2">
@@ -526,9 +528,9 @@ function CheckoutForm({ onPlaced }: { onPlaced: () => void }) {
           )}
           {paymentMethod !== "cod" && (
             <p className="mt-4 rounded-lg bg-muted px-3 py-2 text-xs text-muted-foreground">
-              You&apos;ll be taken to the payment page after confirming your order. (Online
-              payment goes live once the backend is connected — for now the order is
-              placed as &ldquo;unpaid&rdquo;.)
+              You&apos;ll be taken to the payment page after confirming your order.
+              (Online payment goes live once the backend is connected — for now the order
+              is placed as &ldquo;unpaid&rdquo;.)
             </p>
           )}
         </section>

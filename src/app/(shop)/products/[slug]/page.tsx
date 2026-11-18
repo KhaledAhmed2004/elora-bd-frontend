@@ -162,7 +162,8 @@ async function ProductDetails({ params }: Pick<PageProps<"/products/[slug]">, "p
                   <span className="font-medium text-foreground">
                     {product.rating.toFixed(1)}
                   </span>
-                  ({product.reviewCount} {product.reviewCount === 1 ? "review" : "reviews"})
+                  ({product.reviewCount}{" "}
+                  {product.reviewCount === 1 ? "review" : "reviews"})
                 </span>
               ) : null}
               <span>SKU: {product.id.toUpperCase()}</span>

@@ -43,7 +43,14 @@ import { cn } from "@/lib/utils"
 import { variantShort } from "@/lib/variants"
 import type { OrderStatus } from "@/types"
 
-import { PAYMENT_LABEL, PageHeader, Pager, QueryError, StatusBadge } from "./admin-ui"
+import {
+  FilterTabs,
+  PageHeader,
+  Pager,
+  PAYMENT_LABEL,
+  QueryError,
+  StatusBadge,
+} from "./admin-ui"
 import {
   type AdminColumn,
   columnHelper,
@@ -305,32 +312,18 @@ export function OrdersView() {
         </Button>
       </PageHeader>
 
-      <div className="-mx-4 mb-4 scrollbar-none flex gap-1 overflow-x-auto px-4 md:mx-0 md:px-0">
-        {TABS.map((t) => (
-          <button
-            key={t.value}
-            type="button"
-            onClick={() => {
-              setSelection({})
-              setPage(1)
-              router.replace(
-                t.value === "all" ? pathname : `${pathname}?status=${t.value}`,
-                {
-                  scroll: false,
-                }
-              )
-            }}
-            className={cn(
-              "shrink-0 rounded-full border px-3 py-1.5 text-sm whitespace-nowrap transition-colors",
-              status === t.value
-                ? "border-primary bg-primary text-primary-foreground"
-                : "hover:bg-muted"
-            )}
-          >
-            {t.label} <span className="opacity-70">({count(t.value)})</span>
-          </button>
-        ))}
-      </div>
+      <FilterTabs
+        label="Order status"
+        tabs={TABS.map((t) => ({ ...t, count: count(t.value) }))}
+        value={status}
+        onChange={(v) => {
+          setSelection({})
+          setPage(1)
+          router.replace(v === "all" ? pathname : `${pathname}?status=${v}`, {
+            scroll: false,
+          })
+        }}
+      />
 
       <div className="relative mb-4 max-w-sm">
         <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />

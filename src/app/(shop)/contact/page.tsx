@@ -71,8 +71,8 @@ export default function ContactPage() {
               <MapPin className="size-5 shrink-0 text-primary" /> {c.address}
             </p>
             <p className="flex gap-3">
-              <Clock className="size-5 shrink-0 text-primary" /> Saturday – Thursday,
-              10 AM – 9 PM
+              <Clock className="size-5 shrink-0 text-primary" /> Saturday – Thursday, 10
+              AM – 9 PM
             </p>
           </div>
         </aside>

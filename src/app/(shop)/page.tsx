@@ -7,12 +7,10 @@ import { HeroSlider } from "@/components/home/hero-slider"
 import { ProductCarousel } from "@/components/home/product-carousel"
 import { PromoBanners } from "@/components/home/promo-banners"
 import { SectionHeader } from "@/components/home/section-header"
-import { Testimonials } from "@/components/home/testimonials"
 import { WornAndLoved, type WornAndLovedPost } from "@/components/home/worn-and-loved"
 import { Reveal } from "@/components/motion/reveal"
 import { ProductCard } from "@/components/product/product-card"
 import { heroBanners } from "@/data/banners"
-import { testimonials } from "@/data/testimonials"
 import { wornAndLovedHandles } from "@/data/worn-and-loved"
 import {
   getBanners,
@@ -138,16 +136,6 @@ export default async function HomePage() {
 
       <Reveal>
         <WornAndLoved posts={wornAndLoved} />
-      </Reveal>
-
-      <Reveal>
-        <section>
-          <SectionHeader
-            title="What Our Customers Say"
-            subtitle="10,000+ happy customers across the country"
-          />
-          <Testimonials items={testimonials} />
-        </section>
       </Reveal>
     </div>
   )

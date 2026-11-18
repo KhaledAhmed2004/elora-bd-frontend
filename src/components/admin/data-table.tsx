@@ -20,7 +20,14 @@ import {
   tableFeatures,
   useTable,
 } from "@tanstack/react-table"
-import { ArrowDown, ArrowUp, ArrowUpDown, ChevronLeft, ChevronRight } from "lucide-react"
+import {
+  ArrowDown,
+  ArrowUp,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsUpDown,
+  Inbox,
+} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -106,14 +113,14 @@ export function DataTable<T extends RowData>({
   const pageCount = table.getPageCount()
 
   return (
-    <div className="overflow-hidden rounded-xl border bg-card">
+    <div className="overflow-hidden admin-card">
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((group) => (
-              <TableRow key={group.id} className="bg-muted/40 hover:bg-muted/40">
+              <TableRow key={group.id} className="bg-muted/60 hover:bg-muted/60">
                 {selectable && (
-                  <TableHead className="w-10">
+                  <TableHead className="w-10 pl-4">
                     <Checkbox
                       aria-label="Select all on this page"
                       checked={
@@ -130,12 +137,18 @@ export function DataTable<T extends RowData>({
                 {group.headers.map((header) => {
                   const sorted = header.column.getIsSorted()
                   return (
-                    <TableHead key={header.id} className="h-10 whitespace-nowrap">
+                    <TableHead
+                      key={header.id}
+                      className="h-10 px-3 text-xs font-medium whitespace-nowrap text-muted-foreground first:pl-4 last:pr-4"
+                    >
                       {header.isPlaceholder ? null : header.column.getCanSort() ? (
                         <button
                           type="button"
                           onClick={header.column.getToggleSortingHandler()}
-                          className="-ml-1 inline-flex items-center gap-1 rounded px-1 hover:text-foreground"
+                          className={cn(
+                            "-ml-1 inline-flex items-center gap-1 rounded px-1 transition-colors hover:text-foreground",
+                            sorted && "text-foreground"
+                          )}
                         >
                           <table.FlexRender header={header} />
                           {sorted === "asc" ? (
@@ -143,7 +156,7 @@ export function DataTable<T extends RowData>({
                           ) : sorted === "desc" ? (
                             <ArrowDown className="size-3.5" />
                           ) : (
-                            <ArrowUpDown className="size-3.5 opacity-40" />
+                            <ChevronsUpDown className="size-3.5 opacity-40" />
                           )}
                         </button>
                       ) : (
@@ -166,7 +179,7 @@ export function DataTable<T extends RowData>({
                 >
                   {selectable && (
                     <TableCell
-                      className="w-10 py-2.5"
+                      className="w-10 py-3 pl-4"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <Checkbox
@@ -177,18 +190,21 @@ export function DataTable<T extends RowData>({
                     </TableCell>
                   )}
                   {row.getAllCells().map((cell) => (
-                    <TableCell key={cell.id} className="py-2.5">
+                    <TableCell key={cell.id} className="px-3 py-3 first:pl-4 last:pr-4">
                       <table.FlexRender cell={cell} />
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
-              <TableRow>
+              <TableRow className="hover:bg-transparent">
                 <TableCell
                   colSpan={columns.length + (selectable ? 1 : 0)}
-                  className="h-28 text-center text-muted-foreground"
+                  className="h-40 text-center text-muted-foreground"
                 >
+                  <span className="mx-auto mb-2 flex size-10 items-center justify-center rounded-full bg-muted">
+                    <Inbox className="size-5" />
+                  </span>
                   {emptyText}
                 </TableCell>
               </TableRow>
@@ -200,27 +216,33 @@ export function DataTable<T extends RowData>({
       {pageCount > 1 && (
         <div className="flex items-center justify-between gap-2 border-t px-4 py-2.5 text-sm">
           <span className="text-muted-foreground">
-            {filtered} results · Page {pageIndex + 1} / {pageCount}
+            {pageIndex * pageSize + 1}–{Math.min((pageIndex + 1) * pageSize, filtered)} of{" "}
+            {filtered}
           </span>
-          <div className="flex gap-1">
-            <Button
-              variant="outline"
-              size="icon-sm"
-              aria-label="Previous page"
-              disabled={!table.getCanPreviousPage()}
-              onClick={() => table.previousPage()}
-            >
-              <ChevronLeft />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon-sm"
-              aria-label="Next page"
-              disabled={!table.getCanNextPage()}
-              onClick={() => table.nextPage()}
-            >
-              <ChevronRight />
-            </Button>
+          <div className="flex items-center gap-2">
+            <span className="hidden text-muted-foreground sm:inline">
+              Page {pageIndex + 1} of {pageCount}
+            </span>
+            <div className="flex gap-1">
+              <Button
+                variant="outline"
+                size="icon-sm"
+                aria-label="Previous page"
+                disabled={!table.getCanPreviousPage()}
+                onClick={() => table.previousPage()}
+              >
+                <ChevronLeft />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon-sm"
+                aria-label="Next page"
+                disabled={!table.getCanNextPage()}
+                onClick={() => table.nextPage()}
+              >
+                <ChevronRight />
+              </Button>
+            </div>
           </div>
         </div>
       )}

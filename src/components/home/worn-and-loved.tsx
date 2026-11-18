@@ -2,7 +2,14 @@
 
 import Autoplay from "embla-carousel-autoplay"
 import useEmblaCarousel from "embla-carousel-react"
-import { ArrowLeft, ArrowRight, Heart, MessageCircle, Send, ShoppingBag } from "lucide-react"
+import {
+  ArrowLeft,
+  ArrowRight,
+  Heart,
+  MessageCircle,
+  Send,
+  ShoppingBag,
+} from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useCallback, useEffect, useState } from "react"
@@ -62,7 +69,10 @@ export function WornAndLoved({ posts }: { posts: WornAndLovedPost[] }) {
       <div className="relative mb-6 flex items-center justify-center">
         <h2 className="flex items-center gap-2 font-display text-2xl font-bold md:text-3xl">
           Worn &amp; Loved
-          <Heart className="size-6 fill-blush-deep text-blush-deep md:size-7" aria-hidden />
+          <Heart
+            className="size-6 fill-blush-deep text-blush-deep md:size-7"
+            aria-hidden
+          />
         </h2>
         <div className="absolute right-0 hidden gap-1 sm:flex">
           <button
@@ -105,19 +115,25 @@ export function WornAndLoved({ posts }: { posts: WornAndLovedPost[] }) {
                 >
                   {/* Header */}
                   <div className="flex items-center gap-2.5 px-3 py-2.5">
-                    <span className="rounded-full bg-gold-gradient p-[2px]">
-                      <span className="flex size-8 items-center justify-center rounded-full bg-blush-soft text-xs font-semibold uppercase text-espresso ring-2 ring-card">
+                    <span className="rounded-full p-[2px] bg-gold-gradient">
+                      <span className="flex size-8 items-center justify-center rounded-full bg-blush-soft text-xs font-semibold text-espresso uppercase ring-2 ring-card">
                         {post.handle.charAt(0)}
                       </span>
                     </span>
                     <div className="min-w-0 leading-tight">
                       <p className="truncate text-xs font-semibold">{post.handle}</p>
-                      <p className="truncate text-xs text-muted-foreground">{post.caption}</p>
+                      <p className="truncate text-xs text-muted-foreground">
+                        {post.caption}
+                      </p>
                     </div>
                   </div>
 
                   {/* Photo */}
-                  <Link href={post.href} className="relative block aspect-3/4 bg-muted" tabIndex={-1}>
+                  <Link
+                    href={post.href}
+                    className="relative block aspect-3/4 bg-muted"
+                    tabIndex={-1}
+                  >
                     <Image
                       src={post.image}
                       alt={post.alt}
@@ -147,7 +163,11 @@ export function WornAndLoved({ posts }: { posts: WornAndLovedPost[] }) {
                       <Link href={post.href} aria-label="View reviews">
                         <MessageCircle className="size-5 text-foreground/70" />
                       </Link>
-                      <button type="button" aria-label="Share" onClick={() => share(post)}>
+                      <button
+                        type="button"
+                        aria-label="Share"
+                        onClick={() => share(post)}
+                      >
                         <Send className="size-5 text-foreground/70" />
                       </button>
                     </div>

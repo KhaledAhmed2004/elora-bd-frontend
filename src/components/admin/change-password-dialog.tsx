@@ -19,9 +19,23 @@ import { useFieldId } from "@/hooks/use-field-id"
 import { adminAuth } from "@/lib/admin/admin-api"
 import { getErrorMessage } from "@/lib/api"
 
-export function ChangePasswordDialog({ children }: { children: React.ReactNode }) {
+/** Pass `children` as the trigger, or control it with `open` / `onOpenChange`. */
+export function ChangePasswordDialog({
+  children,
+  open: openProp,
+  onOpenChange,
+}: {
+  children?: React.ReactNode
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+}) {
   const fid = useFieldId()
-  const [open, setOpen] = useState(false)
+  const [openState, setOpenState] = useState(false)
+  const open = openProp ?? openState
+  const setOpen = (o: boolean) => {
+    setOpenState(o)
+    onOpenChange?.(o)
+  }
   const [current, setCurrent] = useState("")
   const [next, setNext] = useState("")
   const [confirm, setConfirm] = useState("")
@@ -43,7 +57,7 @@ export function ChangePasswordDialog({ children }: { children: React.ReactNode }
         if (!o) reset()
       }}
     >
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      {children && <DialogTrigger asChild>{children}</DialogTrigger>}
       <DialogContent className="sm:max-w-sm">
         <form
           className="space-y-4"

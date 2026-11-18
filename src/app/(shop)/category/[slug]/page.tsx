@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 
@@ -8,7 +7,6 @@ import { ProductListing } from "@/components/listing/product-listing"
 import { Breadcrumbs, type Crumb } from "@/components/shared/breadcrumbs"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getAllCategorySlugs, getCategoryBySlug } from "@/lib/data"
-import { cn } from "@/lib/utils"
 
 export async function generateStaticParams() {
   return (await getAllCategorySlugs()).map((slug) => ({ slug }))
@@ -67,6 +65,13 @@ async function CategoryContent({
     ? [{ label: parent.name, href: `/category/${parent.slug}` }, { label: category.name }]
     : [{ label: category.name }]
 
+  const subCategories = top.children?.length
+    ? [
+        { slug: top.slug, name: "All" },
+        ...top.children.map((c) => ({ slug: c.slug, name: c.name })),
+      ]
+    : undefined
+
   return (
     <>
       <Breadcrumbs items={crumbs} />
@@ -74,39 +79,14 @@ async function CategoryContent({
         {parent ? `${category.name} ${parent.name}` : category.name}
       </h1>
 
-      {top.children?.length ? (
-        <nav
-          aria-label="Sub-categories"
-          className="-mx-4 mt-4 scrollbar-none overflow-x-auto px-4"
-        >
-          <ul className="flex gap-2">
-            {[{ id: top.id, name: "All", slug: top.slug }, ...top.children].map((c) => {
-              const active = c.slug === category.slug
-              return (
-                <li key={c.id}>
-                  <Link
-                    href={`/category/${c.slug}`}
-                    aria-current={active ? "page" : undefined}
-                    className={cn(
-                      "block rounded-full border px-4 py-1.5 text-sm whitespace-nowrap transition-colors hover:border-primary",
-                      active && "border-primary bg-primary text-primary-foreground"
-                    )}
-                  >
-                    {c.name}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-        </nav>
-      ) : null}
-
       <div className="mt-6">
         <Suspense fallback={<ListingSkeleton />}>
           <ProductListing
             pathname={`/category/${slug}`}
             searchParams={searchParams}
             baseQuery={{ category: slug }}
+            showCategories={true}
+            categories={subCategories}
           />
         </Suspense>
       </div>

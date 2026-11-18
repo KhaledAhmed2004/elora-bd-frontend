@@ -20,6 +20,7 @@ import { ProductFilters } from "./product-filters"
 export function MobileFilters(props: {
   facets: ProductFacets
   showCategories?: boolean
+  categories?: { slug: string; name: string; count?: number }[]
 }) {
   const [open, setOpen] = useState(false)
   const searchParams = useSearchParams()

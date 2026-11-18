@@ -29,7 +29,7 @@ import { cn } from "@/lib/utils"
 import { can, useAdminAuthStore } from "@/store/admin-auth-store"
 
 import { NoAccess } from "./admin-shell"
-import { PageHeader, Pager, QueryError } from "./admin-ui"
+import { FilterTabs, PageHeader, Pager, QueryError } from "./admin-ui"
 
 const num = (v: string) => (v === "" ? 0 : Math.max(0, Number(v) || 0))
 const variantName = (v: { color: string | null; size: string | null }) =>
@@ -107,23 +107,15 @@ export function PurchasesView() {
         <Stat label="Suppliers" value={String(suppliers?.length ?? "—")} />
       </div>
 
-      <div className="mb-4 flex gap-1.5">
-        {(["purchases", "suppliers"] as const).map((t) => (
-          <button
-            key={t}
-            type="button"
-            onClick={() => setTab(t)}
-            className={cn(
-              "rounded-full border px-3 py-1.5 text-sm capitalize transition-colors",
-              tab === t
-                ? "border-primary bg-primary text-primary-foreground"
-                : "hover:border-primary"
-            )}
-          >
-            {t}
-          </button>
-        ))}
-      </div>
+      <FilterTabs
+        label="View"
+        tabs={[
+          { value: "purchases", label: "Purchases" },
+          { value: "suppliers", label: "Suppliers" },
+        ]}
+        value={tab}
+        onChange={setTab}
+      />
 
       {tab === "purchases" ? (
         <PurchasesTab onNeedSupplier={() => setTab("suppliers")} />
@@ -136,7 +128,7 @@ export function PurchasesView() {
 
 function Stat({ label, value, bad }: { label: string; value: string; bad?: boolean }) {
   return (
-    <div className="rounded-xl border bg-card p-4">
+    <div className="admin-card p-4">
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className={cn("text-2xl font-bold tabular-nums", bad && "text-destructive")}>
         {value}
@@ -237,11 +229,7 @@ function PurchasesTab({ onNeedSupplier }: { onNeedSupplier: () => void }) {
           </Button>
         </div>
       ) : (
-        <form
-          noValidate
-          onSubmit={submit}
-          className="space-y-4 rounded-xl border bg-card p-4 md:p-5"
-        >
+        <form noValidate onSubmit={submit} className="space-y-4 admin-card p-4 md:p-5">
           <h2 className="font-semibold">New purchase (stock in)</h2>
           <div className="grid gap-3 sm:grid-cols-[160px_1fr]">
             <Field>
@@ -422,7 +410,7 @@ function PurchasesTab({ onNeedSupplier }: { onNeedSupplier: () => void }) {
         </form>
       )}
 
-      <section className="overflow-hidden rounded-xl border bg-card">
+      <section className="overflow-hidden admin-card">
         <h2 className="border-b px-4 py-3 font-semibold">Purchase history</h2>
         {!history ? (
           <p className="py-10 text-center text-sm text-muted-foreground">Loading...</p>
@@ -535,7 +523,7 @@ function SuppliersTab() {
   return (
     <div className="space-y-6">
       <form
-        className="grid gap-3 rounded-xl border bg-card p-4 sm:grid-cols-[1fr_1fr_1.5fr_auto] sm:items-end"
+        className="grid gap-3 admin-card p-4 sm:grid-cols-[1fr_1fr_1.5fr_auto] sm:items-end"
         onSubmit={(e) => {
           e.preventDefault()
           if (name.trim().length < 2) return toast.error("Enter the supplier name")
@@ -584,7 +572,7 @@ function SuppliersTab() {
           No suppliers yet
         </p>
       ) : (
-        <ul className="divide-y rounded-xl border bg-card">
+        <ul className="divide-y admin-card">
           {suppliers.map((s) => (
             <li key={s.id} className="space-y-2 p-4 text-sm">
               <div className="flex flex-wrap items-start gap-3">

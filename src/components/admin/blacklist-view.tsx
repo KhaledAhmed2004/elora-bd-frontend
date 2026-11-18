@@ -52,7 +52,7 @@ export function BlacklistView() {
         description="Website orders from these numbers will be blocked"
       />
       <form
-        className="mb-6 grid gap-3 rounded-xl border bg-card p-4 sm:grid-cols-[1fr_2fr_auto] sm:items-end"
+        className="mb-6 grid gap-3 admin-card p-4 sm:grid-cols-[1fr_2fr_auto] sm:items-end"
         onSubmit={(e) => {
           e.preventDefault()
           const parsed = adminBdPhoneSchema.safeParse(phone)
@@ -95,7 +95,7 @@ export function BlacklistView() {
           Blacklist is empty
         </p>
       ) : (
-        <ul className="divide-y rounded-xl border bg-card">
+        <ul className="divide-y admin-card">
           {entries.map((e) => (
             <li key={e.phone} className="flex items-center gap-3 p-3 text-sm">
               <div className="min-w-0 flex-1">

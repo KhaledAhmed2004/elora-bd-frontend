@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Slider } from "@/components/ui/slider"
 import { useFieldId } from "@/hooks/use-field-id"
 import type { ProductFacets } from "@/lib/data"
 import { formatPrice } from "@/lib/format"
@@ -24,9 +25,14 @@ interface ProductFiltersProps {
   facets: ProductFacets
   /** Show the category list (on /products and /search, not on category pages) */
   showCategories?: boolean
+  categories?: { slug: string; name: string; count?: number }[]
 }
 
-export function ProductFilters({ facets, showCategories }: ProductFiltersProps) {
+export function ProductFilters({
+  facets,
+  showCategories,
+  categories,
+}: ProductFiltersProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -38,14 +44,34 @@ export function ProductFilters({ facets, showCategories }: ProductFiltersProps) 
   const currentMin = searchParams.get("min") ?? ""
   const currentMax = searchParams.get("max") ?? ""
 
-  // Local inputs, reset whenever the URL values change
+  // Fallback price range bounds
+  const boundMin =
+    facets.priceRange?.min && facets.priceRange.min > 0
+      ? Math.floor(facets.priceRange.min / 50) * 50
+      : 0
+  const boundMax =
+    facets.priceRange?.max && facets.priceRange.max > boundMin
+      ? Math.ceil(facets.priceRange.max / 50) * 50
+      : 15000
+
+  // Local state for the dual-thumb slider and manual inputs
   const [priceKey, setPriceKey] = useState(`${currentMin}-${currentMax}`)
-  const [min, setMin] = useState(currentMin)
-  const [max, setMax] = useState(currentMax)
+  const [minInput, setMinInput] = useState(currentMin)
+  const [maxInput, setMaxInput] = useState(currentMax)
+  const [sliderValue, setSliderValue] = useState<[number, number]>([
+    currentMin ? Number(currentMin) : boundMin,
+    currentMax ? Number(currentMax) : boundMax,
+  ])
+
+  // Sync inputs and slider when URL query parameters change
   if (priceKey !== `${currentMin}-${currentMax}`) {
     setPriceKey(`${currentMin}-${currentMax}`)
-    setMin(currentMin)
-    setMax(currentMax)
+    setMinInput(currentMin)
+    setMaxInput(currentMax)
+    setSliderValue([
+      currentMin ? Number(currentMin) : boundMin,
+      currentMax ? Number(currentMax) : boundMax,
+    ])
   }
 
   function update(changes: Record<string, string | null>) {
@@ -88,33 +114,83 @@ export function ProductFilters({ facets, showCategories }: ProductFiltersProps) 
         )}
       </div>
 
-      {showCategories && facets.categories.length > 0 && (
-        <FilterGroup title="Category">
-          <ul className="space-y-1">
-            {facets.categories.map((c) => {
-              const active = currentCategory === c.slug
-              return (
-                <li key={c.slug}>
-                  <button
-                    type="button"
-                    aria-pressed={active}
-                    onClick={() => update({ category: active ? null : c.slug })}
-                    className={cn(
-                      "flex w-full items-center justify-between rounded-md px-2 py-1.5 text-sm hover:bg-muted",
-                      active && "bg-accent font-medium text-primary"
-                    )}
-                  >
-                    {c.name}
-                    <span className="text-xs text-muted-foreground">{c.count}</span>
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
-        </FilterGroup>
-      )}
+      {showCategories &&
+        (() => {
+          const categoriesList = (
+            categories && categories.length > 0 ? categories : facets.categories
+          ).map((c) => {
+            const facetMatch = facets.categories.find((fc) => fc.slug === c.slug)
+            return {
+              ...c,
+              count: c.count ?? facetMatch?.count,
+            }
+          })
+
+          if (!categoriesList.length) return null
+
+          return (
+            <FilterGroup title="Category">
+              <ul className="space-y-2.5">
+                {categoriesList.map((c) => {
+                  const isCategoryPage = pathname.startsWith("/category/")
+                  const active = isCategoryPage
+                    ? pathname === `/category/${c.slug}` ||
+                      (c.name === "All" &&
+                        pathname.replace(/\/$/, "") === `/category/${c.slug}`)
+                    : currentCategory === c.slug
+
+                  const handleCategoryToggle = () => {
+                    if (isCategoryPage) {
+                      if (active && c.name !== "All") {
+                        const allItem = categoriesList.find((x) => x.name === "All")
+                        router.push(allItem ? `/category/${allItem.slug}` : "/products", {
+                          scroll: false,
+                        })
+                      } else {
+                        router.push(`/category/${c.slug}`, { scroll: false })
+                      }
+                    } else {
+                      update({ category: active ? null : c.slug })
+                    }
+                  }
+
+                  return (
+                    <li key={c.slug}>
+                      <button
+                        type="button"
+                        onClick={handleCategoryToggle}
+                        className="flex w-full cursor-pointer items-center gap-2.5 py-0.5 text-left transition-opacity select-none hover:opacity-80"
+                      >
+                        <Checkbox
+                          checked={active}
+                          className="pointer-events-none size-4 rounded-[3px] data-checked:border-foreground data-checked:bg-foreground data-checked:text-background"
+                        />
+                        <span
+                          className={cn(
+                            "text-sm transition-colors",
+                            active
+                              ? "font-semibold text-foreground"
+                              : "font-normal text-foreground/90"
+                          )}
+                        >
+                          {c.name}
+                        </span>
+                        {c.count != null && (
+                          <span className="ml-auto text-xs font-light text-muted-foreground">
+                            {c.count}
+                          </span>
+                        )}
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+            </FilterGroup>
+          )
+        })()}
 
       <FilterGroup title="Price">
+        {/* Quick presets */}
         <ul className="space-y-1">
           {PRICE_PRESETS.map((p) => {
             const active = currentMin === (p.min ?? "") && currentMax === (p.max ?? "")
@@ -137,11 +213,41 @@ export function ProductFilters({ facets, showCategories }: ProductFiltersProps) 
             )
           })}
         </ul>
+
+        {/* Dual-thumb range slider */}
+        <div className="space-y-2 pt-4">
+          <Slider
+            min={boundMin}
+            max={boundMax}
+            step={50}
+            value={sliderValue}
+            onValueChange={(val) => {
+              const [nextMin, nextMax] = val as [number, number]
+              setSliderValue([nextMin, nextMax])
+              setMinInput(nextMin > boundMin ? String(nextMin) : "")
+              setMaxInput(nextMax < boundMax ? String(nextMax) : "")
+            }}
+            onValueCommit={(val) => {
+              const [newMin, newMax] = val as [number, number]
+              update({
+                min: newMin > boundMin ? String(newMin) : null,
+                max: newMax < boundMax ? String(newMax) : null,
+              })
+            }}
+            aria-label="Price range slider"
+          />
+          <div className="flex items-center justify-between text-xs font-medium text-muted-foreground">
+            <span>{formatPrice(sliderValue[0])}</span>
+            <span>{formatPrice(sliderValue[1])}</span>
+          </div>
+        </div>
+
+        {/* Manual Min - Max inputs with OK button */}
         <form
           className="mt-3 flex items-center gap-2"
           onSubmit={(e) => {
             e.preventDefault()
-            update({ min: min || null, max: max || null })
+            update({ min: minInput || null, max: maxInput || null })
           }}
         >
           <Input
@@ -150,8 +256,8 @@ export function ProductFilters({ facets, showCategories }: ProductFiltersProps) 
             min={0}
             placeholder="Min"
             aria-label="Minimum price"
-            value={min}
-            onChange={(e) => setMin(e.target.value)}
+            value={minInput}
+            onChange={(e) => setMinInput(e.target.value)}
             className="h-9"
           />
           <span className="text-muted-foreground">–</span>
@@ -161,8 +267,8 @@ export function ProductFilters({ facets, showCategories }: ProductFiltersProps) 
             min={0}
             placeholder="Max"
             aria-label="Maximum price"
-            value={max}
-            onChange={(e) => setMax(e.target.value)}
+            value={maxInput}
+            onChange={(e) => setMaxInput(e.target.value)}
             className="h-9"
           />
           <Button type="submit" size="sm" className="h-9">
@@ -170,7 +276,7 @@ export function ProductFilters({ facets, showCategories }: ProductFiltersProps) 
           </Button>
         </form>
         <p className="mt-2 text-xs text-muted-foreground">
-          {formatPrice(facets.priceRange.min)} – {formatPrice(facets.priceRange.max)}
+          {formatPrice(boundMin)} – {formatPrice(boundMax)}
         </p>
       </FilterGroup>
 
@@ -221,7 +327,7 @@ export function ProductFilters({ facets, showCategories }: ProductFiltersProps) 
 function FilterGroup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="border-t pt-5">
-      <h3 className="mb-3 text-sm font-semibold">{title}</h3>
+      <h3 className="mb-3 font-heading text-sm font-bold tracking-tight">{title}</h3>
       {children}
     </section>
   )

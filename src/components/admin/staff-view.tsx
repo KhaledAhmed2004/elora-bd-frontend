@@ -78,7 +78,7 @@ export function StaffView() {
 
       <ul className="mb-6 grid gap-3 sm:grid-cols-3">
         {ROLES.map((r) => (
-          <li key={r.value} className="rounded-xl border bg-card p-3 text-sm">
+          <li key={r.value} className="admin-card p-3 text-sm">
             <p className="font-semibold">{r.label}</p>
             <p className="text-xs text-muted-foreground">{r.text}</p>
           </li>
@@ -88,7 +88,7 @@ export function StaffView() {
       {!staff ? (
         <p className="py-12 text-center text-sm text-muted-foreground">Loading...</p>
       ) : (
-        <ul className="divide-y rounded-xl border bg-card">
+        <ul className="divide-y admin-card">
           {staff.map((s) => {
             const self = s.id === me?.id
             return (

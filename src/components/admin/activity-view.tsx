@@ -127,7 +127,7 @@ export function ActivityView() {
         </p>
       ) : (
         <>
-          <ol className="divide-y rounded-xl border bg-card">
+          <ol className="divide-y admin-card">
             {list.map((e) => (
               <li
                 key={e.id}

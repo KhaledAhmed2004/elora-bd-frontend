@@ -42,8 +42,8 @@ export default function ReturnPolicyPage() {
       <h2>Wrong or damaged items</h2>
       <p>
         If we made a mistake (wrong product, wrong size or damaged item), we will provide
-        a <strong>free</strong> exchange or a full refund — including the delivery
-        charge. Please let us know with photos within 48 hours of receiving the product.
+        a <strong>free</strong> exchange or a full refund — including the delivery charge.
+        Please let us know with photos within 48 hours of receiving the product.
       </p>
 
       <h2>How refunds work</h2>

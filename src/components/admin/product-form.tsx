@@ -789,7 +789,7 @@ function SeoPreview({
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="space-y-4 rounded-xl border bg-card p-4 md:p-5">
+    <section className="space-y-4 admin-card p-4 md:p-5">
       <h2 className="font-semibold">{title}</h2>
       {children}
     </section>

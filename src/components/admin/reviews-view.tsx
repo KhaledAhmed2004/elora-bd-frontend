@@ -19,7 +19,7 @@ import {
 import { formatDate, formatPhone } from "@/lib/format"
 import { cn } from "@/lib/utils"
 
-import { PageHeader, Pager, QueryError } from "./admin-ui"
+import { FilterTabs, PageHeader, Pager, QueryError } from "./admin-ui"
 
 type Status = AdminReview["status"]
 const TABS: { value: Status | "all"; label: string }[] = [
@@ -84,27 +84,18 @@ export function ReviewsView() {
         description="New customer reviews show on the product page only after you approve them"
       />
 
-      <div className="mb-4 flex gap-1.5 overflow-x-auto pb-1">
-        {TABS.map((t) => (
-          <button
-            key={t.value}
-            type="button"
-            onClick={() => {
-              setTab(t.value)
-              reset()
-            }}
-            className={cn(
-              "shrink-0 rounded-full border px-3 py-1.5 text-sm whitespace-nowrap transition-colors",
-              tab === t.value
-                ? "border-primary bg-primary text-primary-foreground"
-                : "hover:border-primary"
-            )}
-          >
-            {t.label}
-            {t.value !== "all" && data && ` (${count(t.value)})`}
-          </button>
-        ))}
-      </div>
+      <FilterTabs
+        label="Review status"
+        tabs={TABS.map((t) => ({
+          ...t,
+          count: t.value !== "all" && data ? count(t.value) : undefined,
+        }))}
+        value={tab}
+        onChange={(v) => {
+          setTab(v)
+          reset()
+        }}
+      />
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <Input
@@ -251,7 +242,7 @@ function ReviewRow({
   )
 
   return (
-    <li className="flex gap-3 rounded-xl border bg-card p-4">
+    <li className="flex gap-3 admin-card p-4">
       <Checkbox
         checked={checked}
         onCheckedChange={(v) => onCheck(v === true)}

@@ -148,7 +148,7 @@ export function CustomerDetailView() {
 
       <div className="grid gap-6 xl:grid-cols-3">
         <div className="space-y-6 xl:col-span-2">
-          <section className="overflow-hidden rounded-xl border bg-card">
+          <section className="overflow-hidden admin-card">
             <h2 className="border-b px-4 py-3 font-semibold">Orders</h2>
             <ul className="divide-y">
               {c.orders.map((o) => (
@@ -174,7 +174,7 @@ export function CustomerDetailView() {
             </ul>
           </section>
 
-          <section className="space-y-3 rounded-xl border bg-card p-4">
+          <section className="space-y-3 admin-card p-4">
             <h2 className="font-semibold">Notes</h2>
             <form
               className="space-y-2"
@@ -229,7 +229,7 @@ export function CustomerDetailView() {
         </div>
 
         <div className="space-y-6">
-          <section className="space-y-3 rounded-xl border bg-card p-4">
+          <section className="space-y-3 admin-card p-4">
             <h2 className="font-semibold">Risk & status</h2>
             <RiskBadge risk={c.risk} />
             {c.blacklist ? (
@@ -262,7 +262,7 @@ export function CustomerDetailView() {
             )}
           </section>
 
-          <section className="space-y-3 rounded-xl border bg-card p-4">
+          <section className="space-y-3 admin-card p-4">
             <h2 className="font-semibold">Tags</h2>
             <div className="flex flex-wrap gap-1.5">
               {allTags.map((t) => {
@@ -309,7 +309,7 @@ export function CustomerDetailView() {
             </form>
           </section>
 
-          <section className="space-y-2 rounded-xl border bg-card p-4 text-sm">
+          <section className="space-y-2 admin-card p-4 text-sm">
             <h2 className="font-semibold">Addresses used</h2>
             <ul className="space-y-1.5">
               {c.addresses.map((a) => (
@@ -327,7 +327,7 @@ export function CustomerDetailView() {
           </section>
 
           {c.bought.length > 0 && (
-            <section className="space-y-2 rounded-xl border bg-card p-4 text-sm">
+            <section className="space-y-2 admin-card p-4 text-sm">
               <h2 className="font-semibold">Bought</h2>
               <ul className="space-y-1">
                 {c.bought.map((p) => (
@@ -341,7 +341,7 @@ export function CustomerDetailView() {
           )}
 
           {c.reviews.length > 0 && (
-            <section className="space-y-2 rounded-xl border bg-card p-4 text-sm">
+            <section className="space-y-2 admin-card p-4 text-sm">
               <h2 className="font-semibold">Reviews</h2>
               <ul className="space-y-2">
                 {c.reviews.map((r) => (
@@ -373,7 +373,7 @@ function Stat({
   tone?: "bad"
 }) {
   return (
-    <div className="rounded-xl border bg-card p-3">
+    <div className="admin-card p-3">
       <p className="text-xs text-muted-foreground">{label}</p>
       <p
         className={cn(

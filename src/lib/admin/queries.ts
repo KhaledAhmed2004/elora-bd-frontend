@@ -489,6 +489,12 @@ export const adminActions = {
   updateProduct: (id: string, body: ProductInput) =>
     send<AdminProduct>("put", `/products/${id}`, body),
   deleteProduct: (id: string) => send("delete", `/products/${id}`),
+  bulkProductStatus: (ids: string[], status: "ACTIVE" | "HIDDEN" | "DRAFT") =>
+    send<{ updated: number }>("post", "/products/bulk/status", { ids, status }),
+  bulkProductCategory: (ids: string[], categoryId: string) =>
+    send<{ updated: number }>("post", "/products/bulk/category", { ids, categoryId }),
+  bulkDeleteProducts: (ids: string[]) =>
+    send<{ deleted: number }>("post", "/products/bulk/delete", { ids }),
   saveCategory: (id: string | null, body: Omit<AdminCategory, "id" | "productCount">) =>
     id ? send("put", `/categories/${id}`, body) : send("post", "/categories", body),
   deleteCategory: (id: string) => send("delete", `/categories/${id}`),

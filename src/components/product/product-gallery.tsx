@@ -75,7 +75,7 @@ export function ProductGallery({
                 handlePrev()
               }}
               aria-label="Previous image"
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-2 text-foreground shadow-sm backdrop-blur transition-opacity hover:bg-background opacity-0 group-hover:opacity-100 focus:opacity-100"
+              className="absolute top-1/2 left-2.5 -translate-y-1/2 rounded-full bg-background/80 p-2 text-foreground opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100 hover:bg-background focus:opacity-100"
             >
               <ChevronLeft className="size-4" />
             </button>
@@ -86,7 +86,7 @@ export function ProductGallery({
                 handleNext()
               }}
               aria-label="Next image"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-2 text-foreground shadow-sm backdrop-blur transition-opacity hover:bg-background opacity-0 group-hover:opacity-100 focus:opacity-100"
+              className="absolute top-1/2 right-2.5 -translate-y-1/2 rounded-full bg-background/80 p-2 text-foreground opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100 hover:bg-background focus:opacity-100"
             >
               <ChevronRight className="size-4" />
             </button>

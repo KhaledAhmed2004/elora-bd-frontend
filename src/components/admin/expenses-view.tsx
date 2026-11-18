@@ -120,7 +120,7 @@ export function ExpensesView() {
         onSubmit={form.handleSubmit((v) =>
           add.mutate({ ...v, note: v.note || undefined })
         )}
-        className="mb-6 grid gap-3 rounded-xl border bg-card p-4 sm:grid-cols-2 lg:grid-cols-[160px_180px_140px_1fr_auto] lg:items-end"
+        className="mb-6 grid gap-3 admin-card p-4 sm:grid-cols-2 lg:grid-cols-[160px_180px_140px_1fr_auto] lg:items-end"
       >
         <Field>
           <FieldLabel htmlFor={fid("date")}>Date</FieldLabel>
@@ -205,7 +205,7 @@ export function ExpensesView() {
       ) : !data ? (
         <p className="py-12 text-center text-sm text-muted-foreground">Loading...</p>
       ) : list.length ? (
-        <ul className="divide-y rounded-xl border bg-card">
+        <ul className="divide-y admin-card">
           {list.map((e) => (
             <li key={e.id} className="flex items-center gap-3 p-3 text-sm">
               <span className="w-24 shrink-0 text-muted-foreground">

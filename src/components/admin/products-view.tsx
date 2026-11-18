@@ -1,6 +1,6 @@
 "use client"
 
-import { Pencil, Plus, Search, Trash2 } from "lucide-react"
+import { Eye, EyeOff, FolderTree, Pencil, Plus, Search, Trash2, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useParams } from "next/navigation"
@@ -39,7 +39,12 @@ import { cn } from "@/lib/utils"
 import { can, useAdminAuthStore } from "@/store/admin-auth-store"
 
 import { PageHeader, Pager, QueryError } from "./admin-ui"
-import { type AdminColumn, columnHelper, DataTable } from "./data-table"
+import {
+  type AdminColumn,
+  columnHelper,
+  DataTable,
+  type RowSelectionState,
+} from "./data-table"
 import { ProductForm } from "./product-form"
 
 type Product = AdminProduct
@@ -56,7 +61,16 @@ export function ProductsView() {
   const [category, setCategory] = useState("all")
   const [status, setStatus] = useState("all")
   const [page, setPage] = useState(1)
+  const [selection, setSelection] = useState<RowSelectionState>({})
+  const [targetCategory, setTargetCategory] = useState("")
   const [toDelete, setToDelete] = useState<Product | null>(null)
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false)
+
+  const selectedIds = useMemo(
+    () => Object.keys(selection).filter((id) => selection[id]),
+    [selection]
+  )
+
   const filter = {
     q,
     categoryId: category === "all" ? undefined : category,
@@ -73,6 +87,46 @@ export function ProductsView() {
     shop: ["catalog"],
     onSuccess: () => setToDelete(null),
   })
+
+  const bulkStatus = useAdminMutation(
+    ({ ids, status }: { ids: string[]; status: "ACTIVE" | "HIDDEN" | "DRAFT" }) =>
+      adminActions.bulkProductStatus(ids, status),
+    {
+      invalidate: [["products"], ["dashboard"]],
+      shop: ["catalog"],
+      success: "Products updated",
+      onSuccess: () => setSelection({}),
+    }
+  )
+
+  const bulkCategory = useAdminMutation(
+    ({ ids, categoryId }: { ids: string[]; categoryId: string }) =>
+      adminActions.bulkProductCategory(ids, categoryId),
+    {
+      invalidate: [["products"], ["categories"]],
+      shop: ["catalog"],
+      success: "Products moved to new category",
+      onSuccess: () => {
+        setSelection({})
+        setTargetCategory("")
+      },
+    }
+  )
+
+  const bulkDelete = useAdminMutation(
+    (ids: string[]) => adminActions.bulkDeleteProducts(ids),
+    {
+      invalidate: [["products"], ["dashboard"]],
+      shop: ["catalog"],
+      success: "Products deleted",
+      onSuccess: () => {
+        setSelection({})
+        setBulkDeleteOpen(false)
+      },
+    }
+  )
+
+  const busy = bulkStatus.isPending || bulkCategory.isPending || bulkDelete.isPending
 
   // Stable columns (TanStack v9 recomputes row models when columns change)
   const columns = useMemo<AdminColumn<Product>[]>(() => {
@@ -227,6 +281,7 @@ export function ProductsView() {
             onChange={(e) => {
               setSearch(e.target.value)
               setPage(1)
+              setSelection({})
             }}
             placeholder="Name, slug or SKU..."
             className="pl-9"
@@ -238,6 +293,7 @@ export function ProductsView() {
           onValueChange={(v) => {
             setCategory(v)
             setPage(1)
+            setSelection({})
           }}
         >
           <SelectTrigger className="w-full sm:w-48" aria-label="Category filter">
@@ -259,6 +315,7 @@ export function ProductsView() {
           onValueChange={(v) => {
             setStatus(v)
             setPage(1)
+            setSelection({})
           }}
         >
           <SelectTrigger className="w-full sm:w-40" aria-label="Visibility filter">
@@ -273,6 +330,97 @@ export function ProductsView() {
         </Select>
       </div>
 
+      {canEdit && selectedIds.length > 0 && (
+        <div
+          role="toolbar"
+          aria-label="Bulk actions"
+          className="sticky top-14 z-10 mb-3 flex flex-wrap items-center gap-2 rounded-xl border border-primary/30 bg-accent p-2.5 shadow-sm"
+        >
+          <span className="px-1 text-sm font-semibold">
+            {selectedIds.length} selected
+          </span>
+
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={busy}
+            onClick={() => bulkStatus.mutate({ ids: selectedIds, status: "ACTIVE" })}
+          >
+            <Eye className="size-4" /> Active
+          </Button>
+
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={busy}
+            onClick={() => bulkStatus.mutate({ ids: selectedIds, status: "HIDDEN" })}
+          >
+            <EyeOff className="size-4" /> Hidden
+          </Button>
+
+          <div className="flex items-center gap-1.5">
+            <Select
+              value={targetCategory}
+              onValueChange={(val) => {
+                if (val) {
+                  bulkCategory.mutate({ ids: selectedIds, categoryId: val })
+                  setTargetCategory("")
+                }
+              }}
+            >
+              <SelectTrigger
+                size="sm"
+                className="w-44 bg-background"
+                aria-label="Move to category"
+              >
+                <FolderTree className="size-3.5 text-muted-foreground" />
+                <SelectValue placeholder="Move category..." />
+              </SelectTrigger>
+              <SelectContent>
+                {categories
+                  .filter((c) => !c.parentId)
+                  .flatMap((parent) => [
+                    <SelectItem key={parent.id} value={parent.id}>
+                      {parent.name}
+                    </SelectItem>,
+                    ...categories
+                      .filter((c) => c.parentId === parent.id)
+                      .map((sub) => (
+                        <SelectItem
+                          key={sub.id}
+                          value={sub.id}
+                          className="pl-6 text-muted-foreground"
+                        >
+                          ↳ {sub.name}
+                        </SelectItem>
+                      )),
+                  ])}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <Button
+            size="sm"
+            variant="outline"
+            className="text-destructive hover:bg-destructive hover:text-white"
+            disabled={busy}
+            onClick={() => setBulkDeleteOpen(true)}
+          >
+            <Trash2 className="size-4" /> Delete ({selectedIds.length})
+          </Button>
+
+          <Button
+            size="icon-sm"
+            variant="ghost"
+            className="ml-auto"
+            aria-label="Clear selection"
+            onClick={() => setSelection({})}
+          >
+            <X className="size-4" />
+          </Button>
+        </div>
+      )}
+
       {error ? (
         <QueryError error={error} onRetry={() => void refetch()} />
       ) : (
@@ -283,17 +431,48 @@ export function ProductsView() {
             data={data?.data ?? []}
             pageSize={PAGE_SIZE}
             emptyText={data ? "No products found" : "Loading..."}
+            getRowId={(p) => p.id}
+            selection={canEdit ? selection : undefined}
+            onSelectionChange={canEdit ? setSelection : undefined}
           />
           {data && (
             <Pager
               page={data.meta.page}
               totalPages={data.meta.totalPages}
               total={data.meta.total}
-              onChange={setPage}
+              onChange={(p) => {
+                setPage(p)
+                setSelection({})
+              }}
             />
           )}
         </div>
       )}
+
+      <AlertDialog open={bulkDeleteOpen} onOpenChange={setBulkDeleteOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete {selectedIds.length} products?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {selectedIds.length} selected product(s) will be permanently deleted. This
+              cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={busy}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive text-white hover:bg-destructive/90"
+              disabled={busy}
+              onClick={(e) => {
+                e.preventDefault()
+                bulkDelete.mutate(selectedIds)
+              }}
+            >
+              {bulkDelete.isPending ? "Deleting..." : "Delete all"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <AlertDialog open={Boolean(toDelete)} onOpenChange={(o) => !o && setToDelete(null)}>
         <AlertDialogContent>

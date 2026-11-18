@@ -68,7 +68,9 @@ export function TrackOrderView() {
             name="phone"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor={fid("phone")}>Mobile Number Used for Order</FieldLabel>
+                <FieldLabel htmlFor={fid("phone")}>
+                  Mobile Number Used for Order
+                </FieldLabel>
                 <Input
                   {...field}
                   id={fid("phone")}
@@ -103,8 +105,8 @@ export function TrackOrderView() {
       {result === null && (
         <div className="flex items-center gap-3 rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm">
           <XCircle className="size-5 shrink-0 text-destructive" />
-          No order found with this order number and mobile number. Please check both
-          and try again.
+          No order found with this order number and mobile number. Please check both and
+          try again.
         </div>
       )}
 

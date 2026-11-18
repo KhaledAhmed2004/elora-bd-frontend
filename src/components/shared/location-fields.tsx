@@ -63,18 +63,14 @@ export function LocationFields({
       label: "District (Zila) *",
       options: districts,
       disabled: !values.division,
-      placeholder: values.division
-        ? "Select district"
-        : "Select a division first",
+      placeholder: values.division ? "Select district" : "Select a division first",
     },
     {
       key: "upazila",
       label: "Upazila / Thana *",
       options: upazilas,
       disabled: !values.district,
-      placeholder: values.district
-        ? "Select upazila/thana"
-        : "Select a district first",
+      placeholder: values.district ? "Select upazila/thana" : "Select a district first",
       wide: true,
     },
   ]

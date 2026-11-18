@@ -28,9 +28,7 @@ export function WishlistButton({
       className={cn("rounded-full", className)}
       onClick={() => {
         toggle(productId)
-        toast.success(
-          active ? "Removed from wishlist" : "Added to wishlist"
-        )
+        toast.success(active ? "Removed from wishlist" : "Added to wishlist")
       }}
     >
       <Heart className={cn("size-4", active && "fill-blush-deep text-blush-deep")} />

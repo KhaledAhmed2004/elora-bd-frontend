@@ -60,7 +60,7 @@ export function ProductTabs({
     <Tabs defaultValue="description" className="gap-0">
       <TabsList
         variant="line"
-        className="h-auto w-full justify-start gap-7 overflow-x-auto overflow-y-hidden border-b p-0 [scrollbar-width:none] md:gap-10"
+        className="h-auto w-full [scrollbar-width:none] justify-start gap-7 overflow-x-auto overflow-y-hidden border-b p-0 md:gap-10"
       >
         <TabsTrigger value="description" className={triggerClass}>
           Description
@@ -72,7 +72,7 @@ export function ProductTabs({
         )}
         <TabsTrigger value="reviews" className={triggerClass}>
           Reviews
-          <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-semibold tabular-nums text-secondary-foreground">
+          <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-semibold text-secondary-foreground tabular-nums">
             {product.reviewCount ?? 0}
           </span>
         </TabsTrigger>
@@ -191,7 +191,9 @@ export function ProductTabs({
                 </span>
                 <div>
                   <h2 className="font-display text-lg font-semibold">Size chart</h2>
-                  <p className="text-xs text-muted-foreground">All measurements in inches</p>
+                  <p className="text-xs text-muted-foreground">
+                    All measurements in inches
+                  </p>
                 </div>
               </div>
               <div className="overflow-x-auto">
@@ -212,7 +214,10 @@ export function ProductTabs({
                     {SIZE_GUIDE.map((r) => {
                       const available = sizes.includes(r.size)
                       return (
-                        <tr key={r.size} className="transition-colors hover:bg-secondary/30">
+                        <tr
+                          key={r.size}
+                          className="transition-colors hover:bg-secondary/30"
+                        >
                           <td className="px-5 py-3">
                             <span
                               className={
@@ -254,8 +259,8 @@ export function ProductTabs({
                 ))}
               </ol>
               <p className="flex items-center gap-2 text-xs text-muted-foreground">
-                <span className="inline-block size-3 rounded-full bg-primary" /> Available in
-                this product
+                <span className="inline-block size-3 rounded-full bg-primary" /> Available
+                in this product
               </p>
             </aside>
           </div>

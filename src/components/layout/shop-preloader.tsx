@@ -261,8 +261,22 @@ function ButterflyIcon() {
         strokeWidth="0.7"
         strokeLinecap="round"
       />
-      <circle cx="15.6" cy="4.4" r="0.85" fill="#fffaf0" stroke="#c99438" strokeWidth="0.4" />
-      <circle cx="24.4" cy="4.4" r="0.85" fill="#fffaf0" stroke="#c99438" strokeWidth="0.4" />
+      <circle
+        cx="15.6"
+        cy="4.4"
+        r="0.85"
+        fill="#fffaf0"
+        stroke="#c99438"
+        strokeWidth="0.4"
+      />
+      <circle
+        cx="24.4"
+        cy="4.4"
+        r="0.85"
+        fill="#fffaf0"
+        stroke="#c99438"
+        strokeWidth="0.4"
+      />
       {/* marquise diamond body in a gold setting */}
       <path
         d="M20 9.2 21.7 15.6 20 22.6 18.3 15.6Z"

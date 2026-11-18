@@ -61,7 +61,9 @@ export function CartView() {
     <div className="grid items-start gap-8 lg:grid-cols-[1fr_380px]">
       <section aria-label="Cart items" className="rounded-2xl border">
         <div className="flex items-center justify-between border-b px-4 py-3 md:px-6">
-          <p className="text-sm font-medium">{items.length} {items.length === 1 ? "item" : "items"}</p>
+          <p className="text-sm font-medium">
+            {items.length} {items.length === 1 ? "item" : "items"}
+          </p>
           <button
             type="button"
             onClick={clearCart}

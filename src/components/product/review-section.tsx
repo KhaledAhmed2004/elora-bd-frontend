@@ -55,7 +55,9 @@ export function ReviewSection({
 
   return (
     <div className="space-y-8">
-      <h2 className="font-display text-2xl font-bold md:text-3xl">Rating &amp; Reviews</h2>
+      <h2 className="font-display text-2xl font-bold md:text-3xl">
+        Rating &amp; Reviews
+      </h2>
       <div className="grid gap-8 lg:grid-cols-[auto_1fr] lg:items-center lg:gap-12">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
           <div>
@@ -183,7 +185,7 @@ function ReviewCarousel({ reviews }: { reviews: Review[] }) {
                 )}
                 <div
                   aria-hidden
-                  className="mt-4 flex size-14 items-center justify-center rounded-full bg-muted text-lg font-semibold uppercase text-muted-foreground"
+                  className="mt-4 flex size-14 items-center justify-center rounded-full bg-muted text-lg font-semibold text-muted-foreground uppercase"
                 >
                   {r.name.trim().charAt(0)}
                 </div>
@@ -241,7 +243,8 @@ function ReviewForm({ product }: { product: Pick<Product, "id" | "name" | "slug"
         const next: Record<string, string> = {}
         if (!rating) next.rating = "Please select a star rating"
         if (name.trim().length < 2) next.name = "Please enter your name"
-        if (phone && !/^01[3-9]\d{8}$/.test(p)) next.phone = "Please enter a valid mobile number"
+        if (phone && !/^01[3-9]\d{8}$/.test(p))
+          next.phone = "Please enter a valid mobile number"
         if (text.trim().length < 10) next.text = "Please write at least 10 characters"
         setErrors(next)
         if (Object.keys(next).length) return

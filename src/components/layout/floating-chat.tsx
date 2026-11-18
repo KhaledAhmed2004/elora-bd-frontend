@@ -3,9 +3,7 @@ import { getStoreSettings } from "@/lib/site-settings"
 
 export async function FloatingChat() {
   const { whatsapp } = await getStoreSettings()
-  const text = encodeURIComponent(
-    "Hi, I'd like to know more about a product."
-  )
+  const text = encodeURIComponent("Hi, I'd like to know more about a product.")
   return (
     <a
       href={`https://wa.me/${whatsapp}?text=${text}`}

@@ -209,6 +209,45 @@
   --sidebar-ring: #d9ab52;
 }
 
+/*
+ * Admin panel theme — set on <body> by useAdminTheme() so dialogs, sheets and
+ * popovers (portalled to body) follow it too. Same brand (espresso + gold),
+ * but neutral work surfaces: grey canvas, white cards, dark sidebar.
+ */
+body.admin-theme {
+  --admin-canvas: #f6f5f3;
+  --background: #ffffff;
+  --card: #ffffff;
+  --popover: #ffffff;
+  --secondary: #f1eeeb;
+  --secondary-foreground: #2b1a14;
+  --muted: #f4f2ef;
+  --muted-foreground: #6d605a;
+  --accent: #f1eeeb;
+  --accent-foreground: #2b1a14;
+  --border: #e7e3df;
+  --input: #978e88;
+  --chart-1: #8a5b0b;
+  --radius: 0.625rem;
+  --sidebar: #1d1410;
+  --sidebar-foreground: #d8cbc3;
+  --sidebar-primary: #e5be6c;
+  --sidebar-primary-foreground: #1f1410;
+  --sidebar-accent: #33231d;
+  --sidebar-accent-foreground: #fff8f0;
+  --sidebar-border: #33231d;
+  --sidebar-ring: #d9ab52;
+  background: var(--admin-canvas);
+}
+
+/* Card surface used across the admin: hairline border + a whisper of depth */
+@utility admin-card {
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: 0 1px 2px rgb(43 26 20 / 0.04);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

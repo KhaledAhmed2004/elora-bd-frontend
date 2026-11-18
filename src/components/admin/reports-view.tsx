@@ -100,7 +100,7 @@ export function ReportsView() {
               </ul>
 
               <div className="grid gap-6 xl:grid-cols-2">
-                <section className="rounded-xl border bg-card p-4">
+                <section className="admin-card p-4">
                   <h2 className="mb-3 font-semibold">Profit & Loss ({periodLabel})</h2>
                   <dl className="space-y-2 text-sm">
                     <Line
@@ -126,7 +126,7 @@ export function ReportsView() {
                   </p>
                 </section>
 
-                <section className="rounded-xl border bg-card p-4">
+                <section className="admin-card p-4">
                   <h2 className="mb-3 font-semibold">
                     Expenses ({formatPrice(pl.expenses)})
                   </h2>
@@ -209,7 +209,7 @@ function BreakdownTable({
 }) {
   const total = rows.reduce((s, r) => s + r.revenue, 0)
   return (
-    <section className="overflow-hidden rounded-xl border bg-card">
+    <section className="overflow-hidden admin-card">
       <div className="flex items-center justify-between border-b px-4 py-3">
         <h2 className="font-semibold">Sales by {title}</h2>
         <Button
@@ -286,7 +286,7 @@ function Kpi({
   tone?: "up" | "down"
 }) {
   return (
-    <li className="rounded-xl border bg-card p-4">
+    <li className="admin-card p-4">
       <div className="flex items-center justify-between text-sm text-muted-foreground">
         {label}
         {tone === "up" && <TrendingUp className="size-4 text-primary" />}

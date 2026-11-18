@@ -18,7 +18,7 @@ import { codDue } from "@/lib/orders"
 import { cn } from "@/lib/utils"
 import { can, useAdminAuthStore } from "@/store/admin-auth-store"
 
-import { PageHeader, QueryError, StatusBadge } from "./admin-ui"
+import { FilterTabs, PageHeader, QueryError, StatusBadge } from "./admin-ui"
 import {
   type AdminColumn,
   columnHelper,
@@ -220,26 +220,15 @@ export function CourierView() {
         <Stat icon={Undo2} label="Returned parcels" value={String(returns)} tone="red" />
       </ul>
 
-      <div className="mb-4 flex flex-wrap gap-1">
-        {TABS.map((t) => (
-          <button
-            key={t.value}
-            type="button"
-            onClick={() => {
-              setTab(t.value)
-              setSelection({})
-            }}
-            className={cn(
-              "rounded-full border px-3 py-1.5 text-sm",
-              tab === t.value
-                ? "border-primary bg-primary text-primary-foreground"
-                : "hover:bg-muted"
-            )}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
+      <FilterTabs
+        label="Settlement status"
+        tabs={TABS}
+        value={tab}
+        onChange={(v) => {
+          setTab(v)
+          setSelection({})
+        }}
+      />
 
       {selectedIds.length > 0 && (
         <div
@@ -303,7 +292,7 @@ function Stat({
   tone?: "amber" | "red"
 }) {
   return (
-    <li className="rounded-xl border bg-card p-4">
+    <li className="admin-card p-4">
       <div className="flex items-center justify-between text-sm text-muted-foreground">
         {label}
         <Icon

@@ -21,7 +21,7 @@ import { getErrorMessage } from "@/lib/api"
 import { formatDate, formatPhone, formatPrice } from "@/lib/format"
 import { cn } from "@/lib/utils"
 
-import { PageHeader, Pager, QueryError } from "./admin-ui"
+import { FilterTabs, PageHeader, Pager, QueryError } from "./admin-ui"
 
 type Tab = "active" | "converted" | "dismissed"
 const TABS: { value: Tab; label: string }[] = [
@@ -84,13 +84,13 @@ export function IncompleteOrdersView() {
       </PageHeader>
 
       <div className="mb-4 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-xl border bg-card p-4">
+        <div className="admin-card p-4">
           <p className="text-xs text-muted-foreground">Waiting for a call</p>
           <p className="text-2xl font-bold tabular-nums">
             {data?.summary.waiting ?? "—"}
           </p>
         </div>
-        <div className="rounded-xl border bg-card p-4">
+        <div className="admin-card p-4">
           <p className="text-xs text-muted-foreground">Cart value left behind</p>
           <p className="text-2xl font-bold tabular-nums">
             {data ? formatPrice(data.summary.value) : "—"}
@@ -98,26 +98,15 @@ export function IncompleteOrdersView() {
         </div>
       </div>
 
-      <div className="mb-4 flex gap-1.5 overflow-x-auto pb-1">
-        {TABS.map((t) => (
-          <button
-            key={t.value}
-            type="button"
-            onClick={() => {
-              setTab(t.value)
-              setPage(1)
-            }}
-            className={cn(
-              "shrink-0 rounded-full border px-3 py-1.5 text-sm whitespace-nowrap transition-colors",
-              tab === t.value
-                ? "border-primary bg-primary text-primary-foreground"
-                : "hover:border-primary"
-            )}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
+      <FilterTabs
+        label="Lead status"
+        tabs={TABS}
+        value={tab}
+        onChange={(v) => {
+          setTab(v)
+          setPage(1)
+        }}
+      />
 
       {error ? (
         <QueryError error={error} onRetry={() => void refetch()} />
@@ -173,7 +162,7 @@ function LeadCard({ lead: e, now }: { lead: Lead; now: number }) {
   const isActive = e.status === "open" || e.status === "called"
 
   return (
-    <li className="space-y-3 rounded-xl border bg-card p-4">
+    <li className="space-y-3 admin-card p-4">
       <div className="flex flex-wrap items-start gap-3">
         <div className="min-w-0 flex-1">
           <p className="font-semibold">

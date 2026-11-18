@@ -58,8 +58,8 @@ export default function PrivacyPolicyPage() {
       <h2>Cookies and Analytics</h2>
       <p>
         We use cookies, Google Analytics and Facebook Pixel to keep the website running
-        properly and to improve it. You can disable cookies in your browser settings,
-        but some features (such as the cart) may not work.
+        properly and to improve it. You can disable cookies in your browser settings, but
+        some features (such as the cart) may not work.
       </p>
 
       <h2>Data security</h2>
@@ -70,8 +70,8 @@ export default function PrivacyPolicyPage() {
 
       <h2>Your rights</h2>
       <p>
-        You may ask to view or correct your information, or to delete your account, at
-        any time. To do so, please contact us.
+        You may ask to view or correct your information, or to delete your account, at any
+        time. To do so, please contact us.
       </p>
 
       <h2>Contact</h2>

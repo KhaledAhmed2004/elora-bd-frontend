@@ -6,7 +6,6 @@ import Link from "next/link"
 import { Breadcrumbs } from "@/components/shared/breadcrumbs"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
-import { unsplash } from "@/data/images"
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -43,13 +42,13 @@ export default function AboutPage() {
           </h1>
           <p className="text-lg text-muted-foreground">
             {siteConfig.name} began with a simple idea — instead of going from shop to
-            shop, buy beautiful Saree, Three Piece and Western dresses from a trusted place
-            without leaving home.
+            shop, buy beautiful Saree, Three Piece and Western dresses from a trusted
+            place without leaving home.
           </p>
           <p className="text-muted-foreground">
             We source products directly from weavers and artisans in Dhaka, Tangail and
-            Narayanganj, so you get great quality at a fair price. We deliver right to your
-            door anywhere in the country, with Cash on Delivery.
+            Narayanganj, so you get great quality at a fair price. We deliver right to
+            your door anywhere in the country, with Cash on Delivery.
           </p>
           <Button asChild size="lg">
             <Link href="/products">View Collection</Link>

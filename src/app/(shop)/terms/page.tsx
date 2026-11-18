@@ -35,7 +35,9 @@ export default function TermsPage() {
 
       <h2>Pricing and payment</h2>
       <ul>
-        <li>All prices are in Bangladeshi Taka (৳) and include VAT (where applicable).</li>
+        <li>
+          All prices are in Bangladeshi Taka (৳) and include VAT (where applicable).
+        </li>
         <li>
           Delivery charges are shown at checkout: ৳{siteConfig.delivery.insideDhaka}{" "}
           inside Dhaka, ৳{siteConfig.delivery.outsideDhaka} outside Dhaka.

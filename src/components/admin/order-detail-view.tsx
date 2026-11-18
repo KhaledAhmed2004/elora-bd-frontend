@@ -186,7 +186,7 @@ export function OrderDetailView() {
         <div className="space-y-6 xl:col-span-2">
           {order.status === "pending" && <CallPanel order={order} />}
 
-          <section className="rounded-xl border bg-card">
+          <section className="admin-card">
             <h2 className="border-b px-4 py-3 font-semibold">
               Product ({order.items.length})
             </h2>
@@ -242,7 +242,7 @@ export function OrderDetailView() {
           </section>
 
           {!closed && order.status !== "pending" && !order.courier && (
-            <section className="flex flex-wrap items-center gap-3 rounded-xl border bg-card p-4">
+            <section className="flex flex-wrap items-center gap-3 admin-card p-4">
               <Truck className="size-5 text-primary" />
               <span className="mr-auto font-semibold">Send to courier</span>
               <Select value={courier} onValueChange={(v) => setCourier(v as CourierName)}>
@@ -263,7 +263,7 @@ export function OrderDetailView() {
             </section>
           )}
 
-          <section className="rounded-xl border bg-card p-4">
+          <section className="admin-card p-4">
             <h2 className="mb-3 font-semibold">Update status</h2>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Select
@@ -306,7 +306,7 @@ export function OrderDetailView() {
             </p>
           </section>
 
-          <section className="rounded-xl border bg-card p-4">
+          <section className="admin-card p-4">
             <h2 className="mb-4 font-semibold">Timeline</h2>
             <ol className="space-y-4">
               {timeline(order).map((h, i) => (
@@ -333,7 +333,7 @@ export function OrderDetailView() {
         </div>
 
         <aside className="space-y-6">
-          <section className="rounded-xl border bg-card p-4 text-sm">
+          <section className="admin-card p-4 text-sm">
             <div className="mb-3 flex items-center justify-between">
               <h2 className="font-semibold">Customer</h2>
               <RiskBadge risk={risk} />
@@ -359,7 +359,7 @@ export function OrderDetailView() {
 
           <RiskPanel phone={a.phone} risk={risk} />
 
-          <section className="space-y-2 rounded-xl border bg-card p-4 text-sm">
+          <section className="space-y-2 admin-card p-4 text-sm">
             <h2 className="mb-1 font-semibold">Payment & delivery</h2>
             <Row label="Method" value={PAYMENT_LABEL[order.paymentMethod]} />
             <Row
@@ -529,7 +529,7 @@ function RiskPanel({ phone, risk }: { phone: string; risk: CustomerRisk }) {
   })
 
   return (
-    <section className="space-y-3 rounded-xl border bg-card p-4 text-sm">
+    <section className="space-y-3 admin-card p-4 text-sm">
       <h2 className="font-semibold">Fraud check</h2>
       <div className="grid grid-cols-3 gap-2 text-center">
         <Stat label="Orders" value={risk.own.total + (risk.courier?.total ?? 0)} />
@@ -605,7 +605,7 @@ function AdminNote({ order }: { order: Order }) {
     success: "Note saved",
   })
   return (
-    <section className="space-y-2 rounded-xl border bg-card p-4 text-sm">
+    <section className="space-y-2 admin-card p-4 text-sm">
       <label htmlFor={fid("adminNote")} className="font-semibold">
         Internal note
       </label>

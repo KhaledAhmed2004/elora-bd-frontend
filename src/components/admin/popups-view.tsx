@@ -222,7 +222,7 @@ export function PopupsView() {
             return (
               <li
                 key={p.id}
-                className="flex flex-col gap-4 rounded-xl border bg-card p-3 sm:flex-row sm:items-center"
+                className="flex flex-col gap-4 admin-card p-3 sm:flex-row sm:items-center"
               >
                 <button
                   type="button"

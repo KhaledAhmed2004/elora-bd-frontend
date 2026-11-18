@@ -17,6 +17,7 @@ interface ProductListingProps {
   /** Fixed filters for this page (e.g. the category on a category page) */
   baseQuery?: ProductQuery
   showCategories?: boolean
+  categories?: { slug: string; name: string; count?: number }[]
 }
 
 /** Reads searchParams, so it must be rendered inside <Suspense>. */
@@ -25,6 +26,7 @@ export async function ProductListing({
   searchParams,
   baseQuery,
   showCategories = false,
+  categories,
 }: ProductListingProps) {
   const sp = await searchParams
   const query = { ...parseProductQuery(sp), ...baseQuery }
@@ -40,7 +42,11 @@ export async function ProductListing({
     <div className="grid gap-8 lg:grid-cols-[240px_1fr]">
       <aside className="hidden lg:block">
         <div className="sticky top-32">
-          <ProductFilters facets={facets} showCategories={showCategories} />
+          <ProductFilters
+            facets={facets}
+            showCategories={showCategories}
+            categories={categories}
+          />
         </div>
       </aside>
 
@@ -59,7 +65,11 @@ export async function ProductListing({
             )}
           </p>
           <div className="flex items-center gap-2">
-            <MobileFilters facets={facets} showCategories={showCategories} />
+            <MobileFilters
+              facets={facets}
+              showCategories={showCategories}
+              categories={categories}
+            />
             <SortSelect />
           </div>
         </div>

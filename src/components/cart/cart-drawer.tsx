@@ -38,9 +38,7 @@ export function CartDrawer() {
       <SheetContent side="right" className="w-full gap-0 p-0 sm:max-w-md">
         <SheetHeader className="border-b">
           <SheetTitle>Your Cart ({count})</SheetTitle>
-          <SheetDescription className="sr-only">
-            Items in your cart
-          </SheetDescription>
+          <SheetDescription className="sr-only">Items in your cart</SheetDescription>
         </SheetHeader>
 
         {items.length === 0 ? (

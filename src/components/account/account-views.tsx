@@ -39,7 +39,12 @@ function Overview() {
   const wishCount = useWishlistStore((s) => s.productIds.length)
 
   const stats = [
-    { label: "Total Orders", value: orders.length, icon: Package, href: "/account/orders" },
+    {
+      label: "Total Orders",
+      value: orders.length,
+      icon: Package,
+      href: "/account/orders",
+    },
     { label: "Wishlist", value: wishCount, icon: Heart, href: "/account/wishlist" },
     {
       label: "Address",
@@ -55,7 +60,9 @@ function Overview() {
         <h1 className="font-display text-2xl font-bold">
           Welcome back, {user.name.split(" ")[0]}!
         </h1>
-        <p className="text-muted-foreground">Everything about your account, in one place</p>
+        <p className="text-muted-foreground">
+          Everything about your account, in one place
+        </p>
       </div>
       <ul className="grid grid-cols-3 gap-2 sm:gap-3">
         {stats.map(({ label, value, icon: Icon, href }) => (
@@ -124,7 +131,9 @@ function EmptyOrders() {
   return (
     <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed py-12 text-center">
       <Package className="size-10 text-muted-foreground" />
-      <p className="text-sm text-muted-foreground">You haven&apos;t placed any orders yet</p>
+      <p className="text-sm text-muted-foreground">
+        You haven&apos;t placed any orders yet
+      </p>
       <Button asChild>
         <Link href="/products">Start Shopping</Link>
       </Button>
